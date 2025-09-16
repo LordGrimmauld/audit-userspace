@@ -22,6 +22,7 @@
  *
  */
 
+#include "auditd-config.h"
 #include "config.h"
 #include <string.h>
 #include <stdio.h>
@@ -137,9 +138,9 @@ int load_pconfig(plugin_conf_t *config, int dirfd, char *file)
 	clear_pconfig(config);
 
 	/* O_PATH avoids blocking, as no read/seek is done.
-	 * We do not pass O_NOFOLLOW, which allows for symlinked configs.
+	 * if symlinks are allowed, we omit the O_NOFOLLOW option
 	 */
-	rc = openat(dirfd, file, O_PATH);
+	rc = openat(dirfd, file, O_PATH | (get_allow_links() == 0 ? O_NOFOLLOW : 0));
 	if (rc < 0) {
 		if (errno != ENOENT) {
 			audit_msg(LOG_ERR, "Error opening %s (%s)", file,

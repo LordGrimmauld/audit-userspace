@@ -283,6 +283,11 @@ void set_allow_links(int allow)
 	allow_links = allow;
 }
 
+int get_allow_links()
+{
+	return allow_links;
+}
+
 int set_config_dir(const char *val)
 {
 	config_dir = strdup(val);

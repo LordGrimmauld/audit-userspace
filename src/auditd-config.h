@@ -102,6 +102,7 @@ struct daemon_conf
 };
 
 void set_allow_links(int allow);
+int get_allow_links();
 int set_config_dir(const char *val);
 
 int load_config(struct daemon_conf *config, log_test_t lt);
